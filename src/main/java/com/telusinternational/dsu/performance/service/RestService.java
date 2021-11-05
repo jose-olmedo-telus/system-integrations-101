@@ -4,18 +4,19 @@ import com.telusinternational.dsu.performance.Entity.Review;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Service
 public class RestService {
 
-    private final RestTemplate restTemplate;
+    WebClient client = WebClient.create();
 
-    public RestService(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder.build();
-    }
-
-    public Review[] getReviewsObject() {
-        String url = "http://localhost:8080/api/employees";
-        return this.restTemplate.getForObject(url, Review[].class);
+    public String getReviewsObject() {
+        WebClient.ResponseSpec responseSpec = client.get()
+                .uri("http://localhost:8080/api/employees")
+                .retrieve();
+        String responseBody = responseSpec.bodyToMono(String.class).block();
+        return responseBody;
     }
 }
