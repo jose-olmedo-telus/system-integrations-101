@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses = ReviewController.class)
+@ComponentScan ({"com.telusinternational.dsu.performance.service", "com.telusinternational.dsu.performance.controllers"})
 public class ReviewApplication {
 
     public static void main(String[] args) {
